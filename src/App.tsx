@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './logo.svg'
+import './App.css'
 
 export default function App(): JSX.Element {
   return (
@@ -19,5 +19,5 @@ export default function App(): JSX.Element {
         </a>
       </header>
     </div>
-  );
+  )
 }
