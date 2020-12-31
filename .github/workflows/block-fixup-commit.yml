@@ -1,5 +1,8 @@
 on:
   push:
+    branches:
+      - "**"
+      - "!master"
 
 name: Check commit block fixup merge.
 
