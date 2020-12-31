@@ -1,0 +1,39 @@
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+name: Check pull request using linter and jest.
+
+jobs:
+  check-pull-req:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["14.15.x"]
+    timeout-minutes: 300
+    steps:
+      - name: checkout pushed commit
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: setup Node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install Dependencies
+        run: yarn install
+      - name: run lint
+        run: yarn lint
+      - name: run test
+        run: yarn test

@@ -1,0 +1,14 @@
+on:
+  push:
+
+name: Check commit block fixup merge.
+
+jobs:
+  run_lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: checkout pushed commit
+        uses: actions/checkout@v2
+      - name: Block Fixup Commit Merge
+        uses: 13rac1/block-fixup-merge-action@v1.1.2
